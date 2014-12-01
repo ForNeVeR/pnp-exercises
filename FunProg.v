@@ -520,7 +520,6 @@ Fixpoint two_power n := if n is n'.+1
 Eval compute in two_power 0.
 Eval compute in two_power 1.
 Eval compute in two_power 2.
-                                
 
 (**
 ---------------------------------------------------------------------
@@ -547,7 +546,7 @@ Exercise [Division by four]
 
 Define the function [div4] that maps any natural number [n] to the
 integer part of [n/4].
- *)
+*)
 
 Fixpoint div2 n := match n with
                      | m2.+1.+1 => (div2 m2) + 1
