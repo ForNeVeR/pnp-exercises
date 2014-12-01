@@ -532,6 +532,13 @@ returns [true] for even numbers and [false] otherwise. Use the
 function we have already defined.
 *)
 
+Fixpoint evenB n := if n is n'.+1
+                    then negate (evenB n')
+                    else true.
+
+Eval compute in evenB 0.
+Eval compute in evenB 1.
+Eval compute in evenB 20.
 
 (**
 ---------------------------------------------------------------------
@@ -540,7 +547,20 @@ Exercise [Division by four]
 
 Define the function [div4] that maps any natural number [n] to the
 integer part of [n/4].
-*)
+ *)
+
+Fixpoint div2 n := match n with
+                     | m2.+1.+1 => (div2 m2) + 1
+                     | 1 => 1
+                     | 0 => 0
+                   end.
+Definition div4 n := div2 (div2 n).
+
+Eval compute in div4 16.
+Eval compute in div4 2.
+Eval compute in div4 8.
+Eval compute in div4 0.
+Eval compute in div4 1.
 
 (**
 ---------------------------------------------------------------------
