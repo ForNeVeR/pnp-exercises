@@ -600,6 +600,7 @@ Fixpoint r_num_den r := match r with
 (* 2/3 *) Eval compute in r_num_den (rD (rN (rN rZero))).
 (* 1/3 *) Eval compute in r_num_den (rD (rD (rN rZero))).
 (* 4/3 *) Eval compute in r_num_den (rN (rD (rD (rN rZero)))).
+(* 5/3 *) Eval compute in r_num_den (rN (rD (rN (rN rZero)))).
 
 (**
 ---------------------------------------------------------------------
