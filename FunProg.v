@@ -584,6 +584,22 @@ Then, define the function that takes an element of the defined type
 and returns a numerator and denominator of the corresponding fraction.
 *)
 
+Inductive rational : Set :=
+  rZero : rational
+| rN : rational -> rational
+| rD : rational -> rational.
+
+Fixpoint r_num_den r := match r with
+                          | rZero => pair 0 1
+                          | rN r' => let (x, y) := r_num_den r'
+                                     in pair (x + y) y
+                          | rD r' => let (x, y) := r_num_den r'
+                                     in pair x (x + y)
+                        end.
+
+(* 2/3 *) Eval compute in r_num_den (rD (rN (rN rZero))).
+(* 1/3 *) Eval compute in r_num_den (rD (rD (rN rZero))).
+(* 4/3 *) Eval compute in r_num_den (rN (rD (rD (rN rZero)))).
 
 (**
 ---------------------------------------------------------------------
