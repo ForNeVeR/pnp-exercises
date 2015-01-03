@@ -627,6 +627,40 @@ constructors explicitly.
 
 *)
 
+Inductive tree (T : Type) : Type :=
+  TLeaf : tree T
+| TNode : T -> (nat -> tree T) -> tree T.
+
+Fixpoint beq_nat n m : bool :=
+  match n, m with
+    | O, O => true
+    | O, S _ => false
+    | S _, O => false
+    | S n1, S m1 => beq_nat n1 m1
+  end.
+
+Eval compute in beq_nat 1 2.
+
+Fixpoint have_zero_at_position_less_than (t : tree nat) (n : nat) :=
+  match t with
+    | TLeaf => false
+    | TNode v c => (beq_nat v 0) || check_level c n
+  end
+  with check_level (children : nat -> tree nat) (n : nat) :=
+    if have_zero_at_position_less_than (children n) n
+    then true
+    else match n with
+           | 0 => false
+           | x.+1 => check_level children x
+         end.
+
+Goal have_zero_at_position_less_than (TLeaf nat) 0 = false. reflexivity. Qed.
+Goal have_zero_at_position_less_than (TLeaf nat) 0 = false. reflexivity. Qed.
+Goal have_zero_at_position_less_than (TNode 0 (fun _ => TLeaf nat)) 0 = true. reflexivity. Qed.
+Goal have_zero_at_position_less_than (TNode 1 (fun n => n)) 0 = true. reflexivity. Qed.
+Goal have_zero_at_position_less_than (TNode 1 (fun n => n)) 1 = true. reflexivity. Qed.
+Goal have_zero_at_position_less_than (TNode 1 (fun n => 1)) 0 = false. reflexivity. Qed.
+Goal have_zero_at_position_less_than (TNode 1 (fun n => 1)) 0 = false. reflexivity. Qed.
 
 (**
 ---------------------------------------------------------------------
